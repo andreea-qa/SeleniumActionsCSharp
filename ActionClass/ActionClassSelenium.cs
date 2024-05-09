@@ -30,6 +30,16 @@ public class ActionClassSelenium
     }
 
     [Test]
+    public void Click()
+    {
+        driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/checkbox-demo");
+        var element = driver.FindElement(By.Id("isAgeSelected"));
+        new Actions(driver)
+            .Click(element)
+            .Perform();
+    }
+
+    [Test]
     public void DragAndDrop()
     {
         driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/drag-and-drop-demo");

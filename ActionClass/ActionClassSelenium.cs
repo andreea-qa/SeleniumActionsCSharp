@@ -26,8 +26,9 @@ public class ActionClassSelenium
         ltOptions.Add("w3c", true);
         ltOptions.Add("plugin", "c#-nunit");
         capabilities.AddAdditionalOption("LT:Options", ltOptions);
-        driver = new ChromeDriver();
+        driver = new RemoteWebDriver(new Uri($"https://{LT_USERNAME}:{LT_ACCESS_KEY}{gridURL}"), capabilities);
     }
+
 
     public void SetStatus(bool passed)
     {
@@ -68,7 +69,7 @@ public class ActionClassSelenium
             var element = driver.FindElement(By.Id("isAgeSelected"));
             new Actions(driver)
                 .DoubleClick(element)
-                .Perform(); 
+                .Perform();
             SetStatus(true);
         }
         catch (Exception)
@@ -87,7 +88,7 @@ public class ActionClassSelenium
             var element = driver.FindElement(By.Id("hot-spot"));
             new Actions(driver)
                 .ContextClick(element)
-                .Perform(); 
+                .Perform();
             SetStatus(true);
         }
         catch (Exception)
@@ -109,7 +110,7 @@ public class ActionClassSelenium
                 MoveByOffset((-(int)slider.Size.Width / 2), 0).
                 MoveByOffset((int)(slider.Size.Width * 0.34), 0).
                 Release().
-                Perform(); 
+                Perform();
             SetStatus(true);
         }
         catch (Exception)
@@ -129,7 +130,7 @@ public class ActionClassSelenium
             var target = driver.FindElement(By.Id("mydropzone"));
             Actions action = new Actions(driver);
             action.DragAndDrop(draggable, target);
-            action.Perform(); 
+            action.Perform();
             SetStatus(true);
         }
         catch (Exception)
@@ -148,7 +149,7 @@ public class ActionClassSelenium
             var element = driver.FindElement(By.XPath("//div[contains(text(),'Hover Me')]"));
             new Actions(driver)
                 .MoveToElement(element)
-                .Perform(); 
+                .Perform();
             SetStatus(true);
         }
         catch (Exception)

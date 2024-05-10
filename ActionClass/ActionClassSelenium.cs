@@ -29,29 +29,150 @@ public class ActionClassSelenium
         driver = new RemoteWebDriver(new Uri($"https://{LT_USERNAME}:{LT_ACCESS_KEY}{gridURL}"), capabilities);
     }
 
-    [Test]
-    public void DragAndDrop()
+    public void SetStatus(bool passed)
     {
-        driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/drag-and-drop-demo");
-        var draggable = driver.FindElement(By.XPath("//*[@id='todrag']/span[1]"));
-        var target = driver.FindElement(By.Id("mydropzone"));
-        Actions action = new Actions(driver);
-        action.DragAndDrop(draggable, target);
-        action.Build();
-        action.Perform();
+        if (driver is not null)
+        {
+            if (passed)
+                ((IJavaScriptExecutor)driver).ExecuteScript("lambda-status=passed");
+            else
+                ((IJavaScriptExecutor)driver).ExecuteScript("lambda-status=failed");
+        }
+    }
+
+    [Test]
+    public void Click()
+    {
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/checkbox-demo");
+            var element = driver.FindElement(By.Id("isAgeSelected"));
+            new Actions(driver)
+                .Click(element)
+                .Perform();
+            SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
+    }
+
+    [Test]
+    public void DoubleClick()
+    {
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/checkbox-demo");
+            var element = driver.FindElement(By.Id("isAgeSelected"));
+            new Actions(driver)
+                .DoubleClick(element)
+                .Perform(); SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
+    }
+
+    [Test]
+    public void ContextClick()
+    {
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/context-menu");
+            var element = driver.FindElement(By.Id("hot-spot"));
+            new Actions(driver)
+                .ContextClick(element)
+                .Perform(); SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
     }
 
     [Test]
     public void ClickAndHold()
     {
-        driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/drag-drop-range-sliders-demo");
-        var slider = driver.FindElement(By.XPath("//*[@id='slider1']/div/input"));
-        Actions action = new Actions(driver);
-        action.ClickAndHold(slider).
-            MoveByOffset((-(int)slider.Size.Width / 2), 0).
-            MoveByOffset((int)(slider.Size.Width*0.34), 0).
-            Release().
-            Perform();
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/drag-drop-range-sliders-demo");
+            var slider = driver.FindElement(By.XPath("//*[@id='slider1']/div/input"));
+            Actions action = new Actions(driver);
+            action.ClickAndHold(slider).
+                MoveByOffset((-(int)slider.Size.Width / 2), 0).
+                MoveByOffset((int)(slider.Size.Width * 0.34), 0).
+                Release().
+                Perform(); SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
+    }
+
+    [Test]
+    public void DragAndDrop()
+    {
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/drag-and-drop-demo");
+            var draggable = driver.FindElement(By.XPath("//*[@id='todrag']/span[1]"));
+            var target = driver.FindElement(By.Id("mydropzone"));
+            Actions action = new Actions(driver);
+            action.DragAndDrop(draggable, target);
+            action.Perform(); SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
+    }
+
+    [Test]
+    public void Hover()
+    {
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/hover-demo");
+            var element = driver.FindElement(By.XPath("//div[contains(text(),'Hover Me')]"));
+            new Actions(driver)
+                .MoveToElement(element)
+                .Perform(); SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
+    }
+
+    [Test]
+    public void KeyboardActions()
+    {
+        try
+        {
+            driver.Navigate().GoToUrl("https://www.lambdatest.com/selenium-playground/simple-form-demo");
+            var input = driver.FindElement(By.Id("user-message"));
+            input.SendKeys("my text");
+            new Actions(driver)
+                .MoveToElement(input)
+                .KeyDown(Keys.Shift)
+                .SendKeys("a")
+                .KeyUp(Keys.Shift)
+                .Perform(); SetStatus(true);
+        }
+        catch (Exception)
+        {
+            SetStatus(false);
+            throw;
+        }
     }
 
     [TearDown]

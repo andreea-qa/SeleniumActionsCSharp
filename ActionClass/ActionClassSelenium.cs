@@ -26,7 +26,7 @@ public class ActionClassSelenium
         ltOptions.Add("w3c", true);
         ltOptions.Add("plugin", "c#-nunit");
         capabilities.AddAdditionalOption("LT:Options", ltOptions);
-        driver = new RemoteWebDriver(new Uri($"https://{LT_USERNAME}:{LT_ACCESS_KEY}{gridURL}"), capabilities);
+        driver = new ChromeDriver();
     }
 
     public void SetStatus(bool passed)
@@ -68,7 +68,8 @@ public class ActionClassSelenium
             var element = driver.FindElement(By.Id("isAgeSelected"));
             new Actions(driver)
                 .DoubleClick(element)
-                .Perform(); SetStatus(true);
+                .Perform(); 
+            SetStatus(true);
         }
         catch (Exception)
         {
@@ -86,7 +87,8 @@ public class ActionClassSelenium
             var element = driver.FindElement(By.Id("hot-spot"));
             new Actions(driver)
                 .ContextClick(element)
-                .Perform(); SetStatus(true);
+                .Perform(); 
+            SetStatus(true);
         }
         catch (Exception)
         {
@@ -107,7 +109,8 @@ public class ActionClassSelenium
                 MoveByOffset((-(int)slider.Size.Width / 2), 0).
                 MoveByOffset((int)(slider.Size.Width * 0.34), 0).
                 Release().
-                Perform(); SetStatus(true);
+                Perform(); 
+            SetStatus(true);
         }
         catch (Exception)
         {
@@ -126,7 +129,8 @@ public class ActionClassSelenium
             var target = driver.FindElement(By.Id("mydropzone"));
             Actions action = new Actions(driver);
             action.DragAndDrop(draggable, target);
-            action.Perform(); SetStatus(true);
+            action.Perform(); 
+            SetStatus(true);
         }
         catch (Exception)
         {
@@ -144,7 +148,8 @@ public class ActionClassSelenium
             var element = driver.FindElement(By.XPath("//div[contains(text(),'Hover Me')]"));
             new Actions(driver)
                 .MoveToElement(element)
-                .Perform(); SetStatus(true);
+                .Perform(); 
+            SetStatus(true);
         }
         catch (Exception)
         {
@@ -162,11 +167,12 @@ public class ActionClassSelenium
             var input = driver.FindElement(By.Id("user-message"));
             input.SendKeys("my text");
             new Actions(driver)
-                .MoveToElement(input)
-                .KeyDown(Keys.Shift)
-                .SendKeys("a")
-                .KeyUp(Keys.Shift)
-                .Perform(); SetStatus(true);
+                .Click(input)
+                .KeyDown(Keys.Control)
+                .SendKeys("A")
+                .KeyUp(Keys.Control)
+                .Perform();
+            SetStatus(true);
         }
         catch (Exception)
         {

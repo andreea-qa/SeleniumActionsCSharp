@@ -34,7 +34,7 @@ Please visit [LambdaTest Capabilities Generator](https://www.lambdatest.com/capa
 Once the environment variables are exported, run the following command from the terminal (after navigating to the root directory):
 
 ```bash
-dotnet test LT_CSharp_Asserts.sln
+dotnet test SeleniumActionsCSharp.sln
 ```
 
 Below is how the test execution looks on LambdaTest:
